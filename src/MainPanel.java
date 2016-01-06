@@ -225,6 +225,7 @@ public class MainPanel extends JPanel {
 		messagesAndScorelist.setLayout(new FlowLayout());
 		JTextArea messages = new JTextArea();
 		messages.setPreferredSize(textAreasDimension);
+		messages.setText(home.data.myTeam.name);
 		JTextArea scorelist = new JTextArea();
 		scorelist.setPreferredSize(textAreasDimension);
 		messagesAndScorelist.setPreferredSize(new Dimension(400,400));

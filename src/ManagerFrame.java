@@ -70,6 +70,7 @@ public class ManagerFrame extends JFrame{
 		repaint();
 	}
 	public void createContent() {
+		
 		ListIterator litr = data.pnames.listIterator();
 		while(litr.hasNext()){
 			double[] skill = new double[20];
@@ -83,6 +84,7 @@ public class ManagerFrame extends JFrame{
 			
 		}
 		litr = data.tnames.listIterator();
+		
 		while(litr.hasNext()){
 			Team tm = new Team((String) litr.next());
 			for(int i=0;i<5;i++){
@@ -90,8 +92,10 @@ public class ManagerFrame extends JFrame{
 				tm.addPlayer(plyr);
 				plyr.setTeam(tm);
 			}
+			
 			data.teams.add(tm);
 		}
+		
 		Tournament tourney =new Tournament("THE INTERNATIONAL",3,1,data.date+1);
 		tourney.addTeam(data.myTeam);
 		tourney.addTeam((Team) data.teams.get(0));

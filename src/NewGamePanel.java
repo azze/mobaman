@@ -26,8 +26,10 @@ public class NewGamePanel extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			
 			Team myTeam = new Team(teamField.getText());
+			
 			NewGamePanel.this.home.data.myTeam=myTeam;
-			NewGamePanel.this.home.createContent();
+			
+			NewGamePanel.this.home.createContent();			
 			NewGamePanel.this.home.switchPanel(1);
 			NewGamePanel.this.dispose();
 		}

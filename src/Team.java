@@ -7,7 +7,7 @@ import java.util.List;
 public class Team {
 	
 	String name;
-	static List players;
+	List players;
 	int money;
 	List tourneys;
 	public Team(String curr) {
@@ -20,7 +20,7 @@ public class Team {
 		players.add(playa);
 		
 	}
-	public static List getPlayers(){
+	public List getPlayers(){
 		return players;
 	}
 	/*
