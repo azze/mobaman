@@ -238,14 +238,16 @@ public class MainPanel extends JPanel {
 		JPanel moneyAndInfo = new JPanel();
 		moneyAndInfo.setLayout(new FlowLayout());
 		JTextArea money = new JTextArea("Money");
+		money.setOpaque(false);
 		money.setPreferredSize(textAreasDimension);
 		JTextArea info = new JTextArea("Info");
+		info.setOpaque(false);
 		info.setPreferredSize(textAreasDimension);
 		moneyAndInfo.setPreferredSize(new Dimension(400,400));
 		moneyAndInfo.add(money);
 		moneyAndInfo.add(info);
 		moneyAndInfo.setBackground(Color.BLACK);
-		moneyAndInfo.setOpaque(true);
+		moneyAndInfo.setOpaque(false);
 		this.add(moneyAndInfo, BorderLayout.EAST);
 		
 		JPanel dateAndTournaments = new JPanel();
