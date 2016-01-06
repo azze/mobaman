@@ -1,0 +1,33 @@
+Swineherd
+3,6,7
+Psychotic Wyrm
+6,4,6
+Captain Porok
+4,8,5
+Herbalist
+9,3,3
+Mycon Priest
+6,6,2
+Jungle Dweller
+4,7,6
+Master of the Deeps
+4,4,8
+Ancient Tormenter
+6,7,2
+Gryphon Chieftan
+4,5,6
+Bakhtak
+3,6,6
+Oozlum Bird
+5,5,5
+Huaychivo
+4,7,4
+Warg Pack
+2,7,7
+Erymanthian Boar
+3,3,9
+Zombie Horde
+2,4,8
+Rakshasa
+8,2,4
+
