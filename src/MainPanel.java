@@ -238,6 +238,7 @@ public class MainPanel extends JPanel {
 		JPanel moneyAndInfo = new JPanel();
 		moneyAndInfo.setLayout(new FlowLayout());
 		JTextArea money = new JTextArea("Money");
+		money.setEditable(false);
 		money.setOpaque(false);
 		money.setPreferredSize(textAreasDimension);
 		JTextArea info = new JTextArea("Info");
