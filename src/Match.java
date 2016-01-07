@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Match {
 	
@@ -6,15 +8,18 @@ public class Match {
 	int time;
 	int startDate;
 	int[][] scores;
-	Hero[] radHeroes;
-	Hero[] dirHeroes;
+	int winner;
+	List radHeroes;
+	List dirHeroes;
 	public Match(Team team, Team team2, int dat) {
 		radiant=team;
 		dire=team2;
 		startDate=dat;
+		radHeroes = new ArrayList();
+		dirHeroes = new ArrayList();
 	}
 	public void setWinner(int i) {
-		// TODO Auto-generated method stub
+		winner =i;
 		
 	}
 
