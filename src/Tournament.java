@@ -7,6 +7,7 @@ public class Tournament {
 	int currTeams;
 	int noOfTeams;
 	int format;
+	int status;
 	Match[] matches;
 	public Tournament(String string, int num, int form, int _date){
 		name=string;
@@ -14,6 +15,7 @@ public class Tournament {
 		noOfTeams=num;
 		currTeams=0;
 		format=form;
+		status=0;
 		teams= new Team[noOfTeams];
 	}
 	public void addTeam(Team team){
@@ -28,6 +30,6 @@ public class Tournament {
 				matches[k]=new Match(teams[i],teams[j],date+k);
 				k++;
 			}
-				
+		status=1;
 	}
 }
