@@ -104,5 +104,13 @@ public class ManagerFrame extends JFrame{
 		data.addTournament(tourney);
 		
 	}
+	public void changeToMatchPanel(Match match) {
+		remove(currentPanel);
+		currentPanel = new MatchPanel(this,match);
+		add(currentPanel);
+		setVisible(true);
+		validate();
+		repaint();
+	}
 	
 }

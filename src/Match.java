@@ -13,5 +13,9 @@ public class Match {
 		dire=team2;
 		startDate=dat;
 	}
+	public void setWinner(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

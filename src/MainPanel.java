@@ -6,6 +6,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -376,8 +379,8 @@ public class MainPanel extends JPanel {
 	class TimeListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			home.data.date++;
-			matchesText.setText(home.data.getNextGames());
-		
+			MainPanel.this.resolveMatches();
+			//messages.setText(home.data.getNextGames());
 		}
 	}
 	class SaveListener implements ActionListener{
@@ -397,5 +400,26 @@ public class MainPanel extends JPanel {
 	 * - add functionality to the next button
 	 * - add functionality to the save button
 	 */
+	public void resolveMatches() {
+		List matches = home.data.getTodaysMatches();
+		ListIterator matchIterator = matches.listIterator();
+		while(matchIterator.hasNext()){
+			Match match = (Match) matchIterator.next();
+			if((match.dire!=home.data.myTeam)&&(match.radiant!=home.data.myTeam)){
+				double direSkill = match.dire.getAverageSkill();
+				double radiantSkill = match.radiant.getAverageSkill();
+				double sum = (direSkill+radiantSkill);
+				direSkill=direSkill/sum;
+				Random rand = new Random();
+				if(rand.nextDouble()<direSkill)
+					match.setWinner(1);
+				else
+					match.setWinner(0);
+			}
+			else
+				home.changeToMatchPanel(match);
+		}
+		
+	}
 	
 }
