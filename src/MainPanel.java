@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -211,11 +210,6 @@ public class MainPanel extends JPanel {
 		
 		//matchesText.setText(home.data.getNextGames());
 		
-		rosterButton.addActionListener(new RosterListener());
-		scheduleButton.addActionListener(new ScheduleListener());
-		timeButton.addActionListener(new TimeListener());
-		saveButton.addActionListener(new SaveListener());
-		exitButton.addActionListener(new ExitListener());
 	}
 	public void initGUI(){
 		

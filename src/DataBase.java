@@ -75,4 +75,20 @@ public class DataBase {
 		
 		return matchCalendar[date];
 	}
+
+	public Tournament[] getOngoingTournaments() {
+		List<Tournament> tempList = new ArrayList<Tournament>();
+		for(int i=0;i<tournaments.size();i++)
+			if(((Tournament)tournaments.get(i)).status==1)
+				tempList.add((Tournament) tournaments.get(i));
+		return tempList.toArray(new Tournament[tempList.size()]);
+	}
+
+	public Tournament[] getUpcomingTournaments() {
+		List<Tournament> tempList = new ArrayList<Tournament>();
+		for(int i=0;i<tournaments.size();i++)
+			if(((Tournament)tournaments.get(i)).status==0)
+				tempList.add((Tournament) tournaments.get(i));
+		return tempList.toArray(new Tournament[tempList.size()]);
+	}
 }
