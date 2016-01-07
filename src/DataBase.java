@@ -101,4 +101,9 @@ public class DataBase {
 		return str;
 
 	}
+
+	public List getTodaysMatches() {
+		
+		return matchCalendar[date];
+	}
 }

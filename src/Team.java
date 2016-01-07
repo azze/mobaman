@@ -40,4 +40,12 @@ public class Team {
 	 * - add history
 	 * 
 	 */
+	public double getAverageSkill() {
+		ListIterator playerIterator = players.listIterator();
+		double skill = 0;
+		while(playerIterator.hasNext()){
+			skill+=((Player) playerIterator.next()).value;
+		}
+		return skill/5.;
+	}
 }
