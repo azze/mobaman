@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /*
  * the team class contains all information concerning a certain team
@@ -23,6 +24,16 @@ public class Team {
 	public List getPlayers(){
 		return players;
 	}
+	public String getPlayersNames(){
+		ListIterator litr = players.listIterator();
+		String playersNames = "";
+	
+		while(litr.hasNext()){
+			Player player =(Player)litr.next();
+			playersNames += player.name +"\n";
+		}
+		return playersNames;
+	}	
 	/*
 	 * TODO:
 	 * - add stuff like manager, coach, rating etc

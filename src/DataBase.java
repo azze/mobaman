@@ -21,6 +21,9 @@ public class DataBase {
 	Team myTeam;
 	List[] matchCalendar;
 	
+	//Test
+	String infoText = "Actions performed this round:" +"\n";
+	String messagesText = "Messages: " +"\n";
 	
 	
 	
@@ -35,14 +38,39 @@ public class DataBase {
 		matchCalendar = new List[100];
 		for(int i=0;i<100;i++)
 			matchCalendar[i]= new ArrayList();
-		date=0;
+		date=1;
 	}
-	
+	public int timeToNextTournament(){
+		Tournament t;
+		ListIterator litr = tournaments.listIterator();
+		int minDate = 100;
+		while(litr.hasNext()){
+			
+			t = (Tournament) litr.next();
+			
+			if(t.date<minDate){
+				
+				minDate = t.date;				
+			}
+
+		}
+		return minDate-date;
+	}
+	public void addToInfo(String s){
+		
+		infoText += " -" +s +"\n";
+	}
+	public void addToMessages(String s){
+		
+		messagesText += " -" +s +"\n";
+	}
 	public void addTournament(Tournament t){
 		tournaments.add(t);
+		System.out.println("addTournament" +"name: " +t.name +" date: "+t.date);
 		for(int i=0;i<t.matches.length;i++){
 			matchCalendar[t.matches[i].startDate].add(t.matches[i]);
 		}
+		addToMessages("New Tournament announced! " +t.name +". " +(t.date-date) +" Days left.");
 	}
 	public List getUncontractedPlayers() {
 		ListIterator litr = players.listIterator();
@@ -63,11 +91,14 @@ public class DataBase {
 
 	public String getNextGames() {
 		String str="NEXT UP: \n";
-		ListIterator litr=matchCalendar[date+1].listIterator();
+		ListIterator litr=matchCalendar[date+timeToNextTournament()].listIterator();
 		while(litr.hasNext()){
 			Match mat =(Match) litr.next();
-			str=str+mat.dire.name +" vs. " +mat.radiant.name+"\n";
-		}
+			str=str+mat.dire.name +"\n" +"vs." +"\n" +mat.radiant.name+"\n";
+		}		
+		System.out.println(str);
+		
 		return str;
+
 	}
 }

@@ -26,8 +26,9 @@ public class NewGamePanel extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			
 			Team myTeam = new Team(teamField.getText());
-			
+			home.data.addToMessages("New Team founded! Name: " +myTeam.name);
 			NewGamePanel.this.home.data.myTeam=myTeam;
+			//NewGamePanel.this.home.data.teams.add(myTeam);  // leads to problems with matchmaking. -> always myTeam vs myTeam
 			
 			NewGamePanel.this.home.createContent();			
 			NewGamePanel.this.home.switchPanel(1);

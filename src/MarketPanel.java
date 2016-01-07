@@ -46,13 +46,16 @@ public class MarketPanel extends JPanel {
 		availablePlayers.addMouseListener(new PlayersMouse());
 		availablePlayers.addListSelectionListener(new PlayerSelectionListener());
 	}
+
 	class HireListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
+
 			Player plyr =(Player) MarketPanel.this.plrs.get(MarketPanel.selected);
 			plyr.setTeam(MarketPanel.this.home.data.myTeam);
 			MarketPanel.this.home.data.myTeam.addPlayer(plyr);
 			MarketPanel.this.home.switchPanel(4);
+			home.data.addToInfo("Hired new Player: " +plyr.name);
 		}
 		
 	}

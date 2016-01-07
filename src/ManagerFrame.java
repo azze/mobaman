@@ -87,16 +87,16 @@ public class ManagerFrame extends JFrame{
 		
 		while(litr.hasNext()){
 			Team tm = new Team((String) litr.next());
+			data.addToMessages("New Team founded! Name: " +tm.name);
 			for(int i=0;i<5;i++){
 				Player plyr = (Player) data.getUncontractedPlayers().get(0);
 				tm.addPlayer(plyr);
 				plyr.setTeam(tm);
 			}
-			
 			data.teams.add(tm);
 		}
 		
-		Tournament tourney =new Tournament("THE INTERNATIONAL",3,1,data.date+1);
+		Tournament tourney =new Tournament("THE INTERNATIONAL",3,1,5); //changed startDate parameter
 		tourney.addTeam(data.myTeam);
 		tourney.addTeam((Team) data.teams.get(0));
 		tourney.addTeam((Team) data.teams.get(1));
