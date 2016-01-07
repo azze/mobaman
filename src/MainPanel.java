@@ -5,13 +5,11 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
 import java.util.ListIterator;
-=======
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
->>>>>>> e6e86b48d14f10a657c324776bab7b5870e23512
+
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -42,6 +40,8 @@ public class MainPanel extends JPanel {
 	Dimension dateDimension = new Dimension(200,80);
 	Dimension thumbnailDimension = new Dimension(100,150);
 	String infoString = "";
+	JTextPane dayRound = new JTextPane();
+	JPanel dateAndTournaments = new JPanel();
 
 	
 	
@@ -54,12 +54,7 @@ public class MainPanel extends JPanel {
 		initGUI();
 		
 		//matchesText.setText(home.data.getNextGames());
-		
-		rosterButton.addActionListener(new RosterListener());
-		scheduleButton.addActionListener(new ScheduleListener());
-		timeButton.addActionListener(new TimeListener());
-		saveButton.addActionListener(new SaveListener());
-		exitButton.addActionListener(new ExitListener());
+
 	}
 	public void initGUI(){
 		
@@ -148,7 +143,7 @@ public class MainPanel extends JPanel {
 	}
 	public JPanel createDateAndTournamentsGUI(){
 		
-		JPanel dateAndTournaments = new JPanel();
+
 		dateAndTournaments.setLayout(new GridLayout(4,1));
 		dateAndTournaments.setPreferredSize(new Dimension(200,100));
 		dateAndTournaments.add(createDayRoundGUI());
@@ -163,7 +158,7 @@ public class MainPanel extends JPanel {
 	}
 	public JTextPane createDayRoundGUI(){
 		
-		JTextPane dayRound = new JTextPane();
+
 		dayRound.setOpaque(false);
 		dayRound.setPreferredSize(dateDimension);
 		StyleContext dayRoundContext = new StyleContext();
@@ -408,7 +403,10 @@ public class MainPanel extends JPanel {
 	}
 	class TimeListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("ein tag vergangen");
 			home.data.date++;
+			dateAndTournaments.remove(dayRound);
+			createDayRoundGUI();
 			MainPanel.this.resolveMatches();
 			//messages.setText(home.data.getNextGames());
 		}
