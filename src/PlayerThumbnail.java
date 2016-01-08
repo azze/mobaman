@@ -31,7 +31,9 @@ public class PlayerThumbnail extends JPanel{
 		
 		Player current = p;
 		
-		playerImage = (Icon) new ImageIcon("C:/Users/Domi/Documents/Uni/Softwareentwicklung/SE1/neu/MobaMan/" + current.name + ".jpg").getImage();
+		playerImage = (Icon) new ImageIcon("C:/Users/Domi/Documents/Uni/Softwareentwicklung/SE1/neu/MobaMan/" + current.name + ".jpg");
+		
+		System.out.println("makeThumbnail(). Thumbnail of Player " +current.name);
 		
 		JPanel thumbnailPanel = new JPanel();
 		thumbnailPanel.setPreferredSize(new Dimension(100,150));
@@ -40,13 +42,18 @@ public class PlayerThumbnail extends JPanel{
 		thumbnailImage.setPreferredSize(new Dimension(75,75));
 		thumbnailImage.setIcon(playerImage);
 		JLabel roleColorCode = new JLabel();
+		roleColorCode.setBackground(Color.RED);
+		roleColorCode.setOpaque(true);
 		//roleColorCode.setBackground(checkRole(current));
 		roleColorCode.setPreferredSize(new Dimension(25,75));
 		JLabel descriptionLabel = new JLabel();
 		descriptionLabel.setPreferredSize(new Dimension(100,75));
+		descriptionLabel.setBackground(Color.BLUE);
+		descriptionLabel.setOpaque(true);
 		thumbnailPanel.add(roleColorCode,BorderLayout.WEST);
 		thumbnailPanel.add(thumbnailImage,BorderLayout.EAST);
 		thumbnailPanel.add(descriptionLabel,BorderLayout.SOUTH);
+		thumbnailPanel.setBackground(Color.GREEN);
 		
 	}
 	

@@ -69,7 +69,7 @@ public class MarketPanel extends JPanel {
 	}
 	class BackListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			MarketPanel.this.home.switchPanel(1);
+			MarketPanel.this.home.switchPanel(2);
 		
 		}
 	}
