@@ -99,8 +99,8 @@ public class ManagerFrame extends JFrame{
 		Tournament tourney =new Tournament("THE INTERNATIONAL",3,1,5); //changed startDate parameter
 		System.out.println("tourney created");
 		tourney.addTeam(data.myTeam);
-		tourney.addTeam((Team) data.teams.get(0));
 		tourney.addTeam((Team) data.teams.get(1));
+		tourney.addTeam((Team) data.teams.get(2));
 		tourney.setup();
 		data.addTournament(tourney);
 		

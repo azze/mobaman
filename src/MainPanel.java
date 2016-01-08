@@ -133,8 +133,7 @@ public class MainPanel extends JPanel {
 			System.out.println("team size"+home.data.teams.size());
 			i++;
 		}
-		rowData[i][0] = i+1;
-		rowData[i][1] = home.data.myTeam.name;
+		
 	
 		JTable scorelist = new JTable(rowData,columnNames);
 		////sorter.setSortKeys(Team);
