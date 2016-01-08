@@ -19,41 +19,51 @@ import javax.swing.JPanel;
 
 public class PlayerThumbnail extends JPanel{
 	
+	Player current;
 	Icon playerImage;
+	JLabel descriptionLabel = new JLabel("description Label");
+	JLabel roleColorCode = new JLabel("color code");
+	JLabel thumbnailImage = new JLabel();
+	JPanel thumbnailPanel = new JPanel();
 	
 	PlayerThumbnail(Player player){
 		
-		makeThumbnail(player);	    
+		add(makeThumbnail(player));	    
 	    
 	}
 	
-	public void makeThumbnail(Player p){
+	public JPanel makeThumbnail(Player p){
 		
-		Player current = p;
+		current = p;
 		
-		playerImage = (Icon) new ImageIcon("C:/Users/Domi/Documents/Uni/Softwareentwicklung/SE1/neu/MobaMan/" + current.name + ".jpg");
-		
-		System.out.println("makeThumbnail(). Thumbnail of Player " +current.name);
-		
-		JPanel thumbnailPanel = new JPanel();
-		thumbnailPanel.setPreferredSize(new Dimension(100,150));
+		playerImage = p.image;		
+
+		thumbnailPanel.setPreferredSize(new Dimension(100,200));
 		thumbnailPanel.setLayout(new BorderLayout());
-		JLabel thumbnailImage = new JLabel();
-		thumbnailImage.setPreferredSize(new Dimension(75,75));
+		
+
+		thumbnailImage.setPreferredSize(new Dimension(75,100));
 		thumbnailImage.setIcon(playerImage);
-		JLabel roleColorCode = new JLabel();
+		
+
 		roleColorCode.setBackground(Color.RED);
 		roleColorCode.setOpaque(true);
 		//roleColorCode.setBackground(checkRole(current));
-		roleColorCode.setPreferredSize(new Dimension(25,75));
-		JLabel descriptionLabel = new JLabel();
-		descriptionLabel.setPreferredSize(new Dimension(100,75));
+		roleColorCode.setPreferredSize(new Dimension(25,100));
+		
+
+		descriptionLabel.setPreferredSize(new Dimension(100,100));
 		descriptionLabel.setBackground(Color.BLUE);
 		descriptionLabel.setOpaque(true);
+		
 		thumbnailPanel.add(roleColorCode,BorderLayout.WEST);
 		thumbnailPanel.add(thumbnailImage,BorderLayout.EAST);
 		thumbnailPanel.add(descriptionLabel,BorderLayout.SOUTH);
 		thumbnailPanel.setBackground(Color.GREEN);
+		thumbnailPanel.setVisible(true);
+		thumbnailPanel.setOpaque(true);
+		
+		return thumbnailPanel;
 		
 	}
 	

@@ -1,3 +1,6 @@
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /*
  * this class represents a moba player and contains all information about him
  */
@@ -9,6 +12,9 @@ public class Player {
 	int value;
 	int age;
 	int role;
+	
+	Icon image;
+	
 	
 /*
  * PreImplemented Softskill values
@@ -26,12 +32,14 @@ public class Player {
 		team=null;
 		morale=1;
 		value=_value;
+		image = (Icon) new ImageIcon("C:/Users/Domi/Documents/Uni/Softwareentwicklung/SE1/neu/MobaMan/" + name + ".jpg");
 	}
 	public Player(String curr) {
 		name=curr;
 		morale=1;
 		team=null;
 		value=100;
+		image = (Icon) new ImageIcon("C:/Users/Domi/Documents/Uni/Softwareentwicklung/SE1/neu/MobaMan/" + name + ".jpg");
 	}
 	public void setTeam(Team _team){
 		team=_team;
@@ -41,6 +49,15 @@ public class Player {
 			return false;
 		else
 			return true;
+	}
+	public String createStatsText(){
+		
+		String temporaryStatsText = "";
+		
+		temporaryStatsText = "Morale = " +morale +"\n" +"Value = " +value +"\n" +"Role = " +"\n" +"Stuff = ";
+		
+		
+		return temporaryStatsText;
 	}
 	//some basic info to print to screen
 	public String getInfo() {

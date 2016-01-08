@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -39,6 +40,8 @@ public class RosterPanel extends JPanel {
 	List names = new ArrayList();
 	PlayerThumbnail thumb;
 	
+	Player infoPlayer = new Player("");
+	
 	
 	public RosterPanel(ManagerFrame _home, Team _team){
 		super();
@@ -66,6 +69,7 @@ public class RosterPanel extends JPanel {
 	}
 
 	public JPanel createRosterGUI(){
+		
 			
 		rosterBackgroundPanel.setLayout(new BorderLayout());
 		
@@ -81,11 +85,40 @@ public class RosterPanel extends JPanel {
 	}
 	public JTextPane createHeaderGUI(){
 		
-
+		headerGUI.setLayout(new FlowLayout());
 		headerGUI.setPreferredSize(new Dimension(1000,50));
-		headerGUI.setBackground(Color.blue);
+		Color color = new Color(34);
+		headerGUI.setBackground(color);	
+		
+		JTextPane headerText = new JTextPane();
+		
+		StyleContext headerContext = new StyleContext();		
+		StyledDocument headerDocument = new DefaultStyledDocument(headerContext);
+		Style headerStyle = headerContext.getStyle(StyleContext.DEFAULT_STYLE);
+		StyleConstants.setFontSize(headerStyle,25);
+		StyleConstants.setAlignment(headerStyle, StyleConstants.ALIGN_CENTER);
+		StyleConstants.setForeground(headerStyle, Color.ORANGE);
+    
+		try {
+			headerDocument.insertString(headerDocument.getLength(),home.data.myTeam.name +"'s Roster", headerStyle);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		headerText.setDocument(headerDocument);
+		headerText.setEditable(false);
+		headerText.setOpaque(false);
+		headerText.setForeground(Color.BLUE);
+		
+		headerGUI.add(headerText);
 		
 		return headerGUI;
+		
+	}
+	public void updateSelectedPlayerInfoGUI(){
+		
+		
 		
 	}
 	public JPanel createInfoAndCurrentPlayersContainer(){
@@ -95,6 +128,7 @@ public class RosterPanel extends JPanel {
 		infoAndCurrentPlayersContainer.setPreferredSize(new Dimension(600,500));
 		infoAndCurrentPlayersContainer.add(createInfoGUI());
 		infoAndCurrentPlayersContainer.add(createCurrentPlayersGUI());
+		infoAndCurrentPlayersContainer.setOpaque(false);
 		
 		return infoAndCurrentPlayersContainer;
 		
@@ -130,47 +164,102 @@ public class RosterPanel extends JPanel {
 
 		currentPlayersGUI.setPreferredSize(new Dimension(600,200));
 		currentPlayersGUI.setLayout(new FlowLayout());
-		
-			int currentPlayerCount = home.data.myTeam.players.size();
+		currentPlayersGUI.setOpaque(false);
 			
-			ListIterator litr = home.data.myTeam.players.listIterator();
-			
-			JLabel testLabel2 = new JLabel("hallo");
-			testLabel2.setBackground(Color.PINK);
-			testLabel2.setPreferredSize(new Dimension(100,200));
-			testLabel2.setOpaque(true);
-			currentPlayersGUI.add(testLabel2);
-			
+		int slotCount = 5 -(home.data.myTeam.players.size());
+		int currentPlayerCount = home.data.myTeam.players.size();			
+		ListIterator litr = home.data.myTeam.players.listIterator();
+					
 			while(litr.hasNext()){
 								
 				Player player =(Player)litr.next();
+					
 				
-				
-				
-				/*
 				thumb = new PlayerThumbnail(player);
 				thumb.setPreferredSize(new Dimension(100,200));
 				thumb.setOpaque(true);
 				thumb.setVisible(true);
 				thumb.setBackground(Color.MAGENTA);
 				currentPlayersGUI.add(thumb);
-				*/
+								
+				PlayerListener listener = new PlayerListener();
+				listener.thumbnailPlayer = player;
+				thumb.addMouseListener(listener);
+
 				
-				JLabel testLabel = new JLabel("hallo");
-				testLabel.setBackground(Color.GREEN);
-				testLabel.setPreferredSize(new Dimension(100,200));
-			
 			}
-			currentPlayersGUI.setBackground(Color.CYAN);
+			//currentPlayersGUI.setBackground(Color.CYAN);
+			
+			while(slotCount > 0){
+				
+				JTextPane freeSlot = new JTextPane();
+				freeSlot.setText("Free Slot");
+				freeSlot.setBackground(Color.DARK_GRAY);
+				freeSlot.setPreferredSize(new Dimension(100,200));
+				freeSlot.setOpaque(true);
+				currentPlayersGUI.add(freeSlot);
+				
+				slotCount--;
+				
+			}
 				
 		return currentPlayersGUI;
 		
 	}
 
-	public JPanel createSelectedPlayerInfoGUI(){
+	public JPanel createSelectedPlayerInfoGUI(){ ////////////////////////////////////////////////////////////////////////////////
 		
+		selectedPlayerInfoGUI.setLayout(new BorderLayout());
 		selectedPlayerInfoGUI.setPreferredSize(new Dimension(400,500));
 		selectedPlayerInfoGUI.setBackground(Color.ORANGE);
+		
+		JTextPane playerNameTextPane = new JTextPane();
+		
+		StyleContext playerNameContext = new StyleContext();		
+		StyledDocument playerNameDocument = new DefaultStyledDocument(playerNameContext);
+		Style playerNameStyle = playerNameContext.getStyle(StyleContext.DEFAULT_STYLE);
+		StyleConstants.setFontSize(playerNameStyle,25);
+		StyleConstants.setAlignment(playerNameStyle, StyleConstants.ALIGN_CENTER);
+		StyleConstants.setForeground(playerNameStyle, Color.ORANGE);
+    
+		try {
+			playerNameDocument.insertString(playerNameDocument.getLength(),infoPlayer.name, playerNameStyle);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		playerNameTextPane.setDocument(playerNameDocument);
+		playerNameTextPane.setOpaque(true);		
+		playerNameTextPane.setEditable(false);
+		playerNameTextPane.setPreferredSize(new Dimension(400,50));
+		playerNameTextPane.setBackground(Color.BLACK);
+
+
+		
+		JLabel playerImage = new JLabel();
+		playerImage.setIcon(infoPlayer.image);
+		playerImage.setPreferredSize(new Dimension(250,250));
+		playerImage.setBackground(Color.DARK_GRAY);
+		
+		JTextPane importantStats = new JTextPane();
+		importantStats.setText(infoPlayer.createStatsText());
+		importantStats.setPreferredSize(new Dimension(150,250));
+		importantStats.setBackground(Color.red);
+		importantStats.setOpaque(true);
+		
+		JTextPane playerInfoTextPane = new JTextPane();
+		playerInfoTextPane.setEditable(false);
+		playerInfoTextPane.setPreferredSize(new Dimension(400,250));
+		playerInfoTextPane.setText("Player history");////////////////
+		playerInfoTextPane.setOpaque(false);
+		playerInfoTextPane.setForeground(Color.white);
+		
+		selectedPlayerInfoGUI.add(playerNameTextPane,BorderLayout.NORTH);
+		selectedPlayerInfoGUI.add(playerImage,BorderLayout.EAST);
+		selectedPlayerInfoGUI.add(importantStats,BorderLayout.WEST);
+		selectedPlayerInfoGUI.add(playerInfoTextPane,BorderLayout.SOUTH);
+		
 		
 		
 		return selectedPlayerInfoGUI;
@@ -188,6 +277,43 @@ public class RosterPanel extends JPanel {
 		buttonContainer.add(buttonGUI);
 		
 		return buttonContainer;
+	}
+	class PlayerListener implements MouseListener{
+
+		Player thumbnailPlayer = new Player("");	
+		
+
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+			System.out.println("Mouse Clicked");
+			infoPlayer = thumbnailPlayer;
+			createSelectedPlayerInfoGUI();
+			selectedPlayerInfoGUI.repaint();
+			
+		}
+
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+			
+			
+		}
+
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 	class SignListener implements ActionListener{
 
