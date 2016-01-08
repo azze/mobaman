@@ -16,14 +16,20 @@ public class PlayerPanel extends JPanel {
 	JButton backButton;
 	public PlayerPanel(ManagerFrame _home,Player player){
 		super();
+		home=_home;
 		plyr=player;
 		info = new JTextArea();
 		backButton = new JButton("BACK");
 		add(info);
 		add(backButton);
 		info.setText(plyr.getInfo());
+		for(int i= 0;i<player.heroSkill.length;i++){
+			double number=Math.round(player.heroSkill[i]);
+			number=number/100;
+			info.setText(info.getText()+((Hero)home.data.heroes.get(i)).name +": " +number+"\n");
+		}
 		backButton.addActionListener(new BackListener());
-		home=_home;
+		
 	}
 	class BackListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {

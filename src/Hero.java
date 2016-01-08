@@ -14,10 +14,7 @@ public class Hero {
 	int strstat;
 	public Hero(int type, String temp, String[] stat) {
 		this.type=type;
-		Random rand = new Random();
-		heroSkill = new double[16];
-		for(int i=0;i<heroSkill.length;i++)
-			heroSkill[i]=100+rand.nextDouble()*10-5;
+		
 		name=temp;
 		intstat=Integer.parseInt(stat[0]);
 		agistat=Integer.parseInt(stat[1]);

@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -12,7 +14,7 @@ public class Player {
 	int value;
 	int age;
 	int role;
-	
+	double[] heroSkill;
 	Icon image;
 	
 	
@@ -33,6 +35,10 @@ public class Player {
 		morale=1;
 		value=_value;
 		image = (Icon) new ImageIcon("C:/Users/Domi/Documents/Uni/Softwareentwicklung/SE1/neu/MobaMan/" + name + ".jpg");
+		Random rand = new Random();
+		heroSkill = new double[16];
+		for(int i=0;i<heroSkill.length;i++)
+			heroSkill[i]=100+rand.nextDouble()*10-5;
 	}
 	public Player(String curr) {
 		name=curr;
@@ -40,6 +46,10 @@ public class Player {
 		team=null;
 		value=100;
 		image = (Icon) new ImageIcon("C:/Users/Domi/Documents/Uni/Softwareentwicklung/SE1/neu/MobaMan/" + name + ".jpg");
+		Random rand = new Random();
+		heroSkill = new double[16];
+		for(int i=0;i<heroSkill.length;i++)
+			heroSkill[i]=100+rand.nextDouble()*10-5;
 	}
 	public void setTeam(Team _team){
 		team=_team;
