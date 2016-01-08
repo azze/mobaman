@@ -19,16 +19,18 @@ public class Main{
 		List data = Files.readAllLines(Paths.get("her.txt",new String[0]));
 		ListIterator dataitr = data.listIterator();
 		String temp="";
+		int k =0;
 		while(dataitr.hasNext()){
 			String curr = (String) dataitr.next();
 			if(temp=="")
 				temp=curr;
 			else{
 				String[] stat =curr.split(",");
-				Hero h=new Hero(temp,stat);
+				Hero h=new Hero(k,temp,stat);
 				database.heroes.add(h);
 				temp="";
 			}
+			k++;
 		}
 		List pnameData = Files.readAllLines(Paths.get("pnames", new String[0]));
 		ListIterator pnameDataItr = pnameData.listIterator();

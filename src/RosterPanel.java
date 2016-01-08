@@ -159,7 +159,6 @@ public class RosterPanel extends JPanel {
 				JLabel testLabel = new JLabel("hallo");
 				testLabel.setBackground(Color.GREEN);
 				testLabel.setPreferredSize(new Dimension(100,200));
-			
 			}
 			currentPlayersGUI.setBackground(Color.CYAN);
 				

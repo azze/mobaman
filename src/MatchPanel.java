@@ -9,9 +9,13 @@ import java.util.ListIterator;
 import java.util.Random;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 
 public class MatchPanel extends JPanel{
 	ManagerFrame home;
@@ -19,11 +23,14 @@ public class MatchPanel extends JPanel{
 	int playerSide;
 	int startingTeam;
 	List availableHeroes;
+	DefaultListModel radiantList;
+	DefaultListModel direList;
 	JPanel pickPanel;
 	JPanel playPanel;
+	JPHLabel[] players;
 	JButton[] heroButtons;
-	JTextArea direPicks;
-	JTextArea radiantPicks;
+	JList direPicks;
+	JList radiantPicks;
 	int turn = 0;
 	Random rand= new Random();
 	public MatchPanel(ManagerFrame _home, Match _match){
@@ -44,13 +51,15 @@ public class MatchPanel extends JPanel{
 		
 	}
 	private void setupPickPanel() {
+		radiantList= new DefaultListModel();
+		direList= new DefaultListModel();
 		JPanel radiantPanel = new JPanel();
-		radiantPicks = new JTextArea();
-		radiantPicks.setText(match.radiant.name +": \n");
+		radiantPicks = new JList(radiantList);
+		radiantList.addElement(match.radiant.name);
 		radiantPanel.setLayout(new FlowLayout());
 		JPanel direPanel = new JPanel();
-		direPicks = new JTextArea();
-		direPicks.setText(match.dire.name +": \n");
+		direPicks = new JList(direList);
+		direList.addElement(match.dire.name);
 		direPanel.setLayout(new FlowLayout());
 		pickPanel.setLayout(new BorderLayout());
 		pickPanel.add(radiantPanel,BorderLayout.WEST);
@@ -88,46 +97,79 @@ public class MatchPanel extends JPanel{
 			computerPick();
 			
 		pickPanel.add(buttonPanel, BorderLayout.CENTER);
-		validate();
-		repaint();
+		players= new JPHLabel[5];
+		JPanel playerPanel = new JPanel();
+		playerPanel.setLayout(new FlowLayout());
+		Team mine;
+		if(playerSide==0)
+			mine=match.radiant;
+		else
+			mine= match.dire;
+		for(int j=0;j<players.length;j++){
+			players[j]=new JPHLabel();
+			playerPanel.add(players[j]);
+			players[j].setText(((Player)mine.players.get(j)).name);
+		}
+		
+		JButton nextt = new JButton("next");
+		nextt.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				MatchPanel.this.remove(pickPanel);
+				MatchPanel.this.add(playPanel);
+				MatchPanel.this.setupPlayPanel();
+				
+			}
+		});
+		playerPanel.add(nextt);
+		pickPanel.add(playerPanel,BorderLayout.SOUTH);
+		
 	}
 	private void computerPick() {
 		int i = rand.nextInt(home.data.heroes.size()-turn);
 		Hero hero =(Hero)home.data.heroes.get(i);
 		if((playerSide+1)%2==0){
-			radiantPicks.setText(radiantPicks.getText()+hero.name+"\n");
+			radiantList.addElement(hero);
 			match.radHeroes.add(hero);
 		}
 		else{
-			direPicks.setText(direPicks.getText()+hero.name+"\n");
+			direList.addElement(hero);
 			match.dirHeroes.add(hero);
 		}
 		availableHeroes.remove(hero);
 		heroButtons[i].setEnabled(false);
 		turn++;
 		if(turn==10){
-			setupPlayPanel();
-			remove(pickPanel);
-			add(playPanel);
+			selectPhase();
+		}
+	}
+	private void selectPhase() {
+		for(int i= 0;i<heroButtons.length;i++)
+			heroButtons[i].setEnabled(false);
+		if(playerSide==0){
+			radiantPicks.setDragEnabled(true);
+			radiantPicks.setTransferHandler(new HeroTransferHandler());
+			for(int i =0;i<players.length;i++){
+				players[i].setTransferHandler(new HeroTransferHandler());
+			}
+			
 		}
 	}
 	public void pick(int i) {
 		Hero hero =(Hero)home.data.heroes.get(i);
 		if(playerSide==0){
-			radiantPicks.setText(radiantPicks.getText()+hero.name+"\n");
+			radiantList.addElement(hero);
 			match.radHeroes.add(hero);
 		}
 		else{
-			direPicks.setText(direPicks.getText()+hero.name+"\n");
+			direList.addElement(hero);
 			match.dirHeroes.add(hero);
 		}
 		availableHeroes.remove(hero);
 		heroButtons[i].setEnabled(false);
 		turn++;
 		if(turn==10){
-			setupPlayPanel();
-			remove(pickPanel);
-			add(playPanel);
+			selectPhase();
 		}
 		else
 			computerPick();
