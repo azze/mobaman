@@ -16,6 +16,8 @@ import javax.swing.JTextArea;
 public class MatchPanel extends JPanel{
 	ManagerFrame home;
 	Match match;
+	int playerSide;
+	int startingTeam;
 	List availableHeroes;
 	JPanel pickPanel;
 	JPanel playPanel;
@@ -23,16 +25,23 @@ public class MatchPanel extends JPanel{
 	JTextArea direPicks;
 	JTextArea radiantPicks;
 	int turn = 0;
+	Random rand= new Random();
 	public MatchPanel(ManagerFrame _home, Match _match){
 		super();
 		home=_home;
 		match=_match;
+		if(match.dire==home.data.myTeam)
+			playerSide=1;
+		else
+			playerSide=0;
+		startingTeam=rand.nextInt(2);
 		pickPanel = new JPanel();
 		playPanel = new JPanel();
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setupPickPanel();
 		add(pickPanel);
 		pickPanel.setVisible(true);
+		
 	}
 	private void setupPickPanel() {
 		JPanel radiantPanel = new JPanel();
@@ -75,13 +84,17 @@ public class MatchPanel extends JPanel{
 			heroButtons[i]=button;
 			i++;
 		}
+		if(startingTeam!=playerSide)
+			computerPick();
+			
 		pickPanel.add(buttonPanel, BorderLayout.CENTER);
 		validate();
 		repaint();
 	}
-	public void pick(int i) {
+	private void computerPick() {
+		int i = rand.nextInt(home.data.heroes.size()-turn);
 		Hero hero =(Hero)home.data.heroes.get(i);
-		if(turn%2==0){
+		if((playerSide+1)%2==0){
 			radiantPicks.setText(radiantPicks.getText()+hero.name+"\n");
 			match.radHeroes.add(hero);
 		}
@@ -97,6 +110,27 @@ public class MatchPanel extends JPanel{
 			remove(pickPanel);
 			add(playPanel);
 		}
+	}
+	public void pick(int i) {
+		Hero hero =(Hero)home.data.heroes.get(i);
+		if(playerSide==0){
+			radiantPicks.setText(radiantPicks.getText()+hero.name+"\n");
+			match.radHeroes.add(hero);
+		}
+		else{
+			direPicks.setText(direPicks.getText()+hero.name+"\n");
+			match.dirHeroes.add(hero);
+		}
+		availableHeroes.remove(hero);
+		heroButtons[i].setEnabled(false);
+		turn++;
+		if(turn==10){
+			setupPlayPanel();
+			remove(pickPanel);
+			add(playPanel);
+		}
+		else
+			computerPick();
 	}
 	private void setupPlayPanel() {
 		playPanel.setLayout(new BorderLayout());
@@ -116,13 +150,14 @@ public class MatchPanel extends JPanel{
 		double radiantSkill = match.radiant.getAverageSkill();
 		double sum = (direSkill+radiantSkill);
 		direSkill=direSkill/sum;
-		Random rand = new Random();
 		if(rand.nextDouble()<direSkill){
 			match.setWinner(1);
+			home.data.addToMessages(match.dire.name+ " won against " + match.radiant.name);
 			result.setText("DIRE WINS");
 		}
 		else{
 			match.setWinner(0);
+			home.data.addToMessages(match.radiant.name+ " won against " + match.dire.name);
 			result.setText("RADIANT WINS");
 		}
 		validate();
