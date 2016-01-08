@@ -41,7 +41,9 @@ public class MainPanel extends JPanel {
 	Dimension thumbnailDimension = new Dimension(100,150);
 	String infoString = "";
 	JTextPane dayRound = new JTextPane();
+	JTextPane roundsToEvent = new JTextPane();
 	JPanel dateAndTournaments = new JPanel();
+	
 
 	
 	
@@ -190,7 +192,7 @@ public class MainPanel extends JPanel {
 	}
 	public JTextPane createRoundsToEventGUI(){
 		
-		JTextPane roundsToEvent = new JTextPane();
+		
 		roundsToEvent.setOpaque(false);
 		roundsToEvent.setPreferredSize(dateDimension);
 		
@@ -417,7 +419,6 @@ public class MainPanel extends JPanel {
 			//home.remove(home.currentPanel);
 			home.repaint();
 			createRoundsToEventGUI();
-			remove(dayRound);
 			createDayRoundGUI();
 
 			//repaint();
