@@ -72,6 +72,7 @@ public class MainPanel extends JPanel {
 		timeButton.addActionListener(new TimeListener());
 		saveButton.addActionListener(new SaveListener());
 		exitButton.addActionListener(new ExitListener());
+		System.out.println("team size"+home.data.teams.size());
 		
 		
 	}
@@ -115,27 +116,33 @@ public class MainPanel extends JPanel {
 		
 	}
 	public JScrollPane createRankingTable(){
-		
-		Object rowData[][] = new Object[home.data.teams.size()][5];	
+	
+		Object rowData[][] = new Object[home.data.teams.size()+2][5];	
 		Object columnNames[] = { "Rank","Team", "Rating","Win Rate","Trend"};
 		ListIterator litr = home.data.teams.listIterator();
+
 		int i = 0;
-		
+		System.out.println("created ranking");
 		while(litr.hasNext()){		
-			Team t = (Team) litr.next();
+			
 			rowData[i][0] = i+1;
-			rowData[i][1] = t.name;
-			System.out.println(t.name);
+			rowData[i][1] = ((Team)litr.next()).name;
+			System.out.println("lalalalalalalalalala"+rowData[i][1]);
+			System.out.println("team size"+home.data.teams.size());
 			i++;
 		}
-		
+		rowData[i][0] = i+1;
+		rowData[i][1] = home.data.myTeam.name;
+	
 		JTable scorelist = new JTable(rowData,columnNames);
+		////sorter.setSortKeys(Team);
 		scorelist.setPreferredSize(textAreasDimension);
 		JScrollPane scrollpane = new JScrollPane(scorelist);
 		scrollpane.setPreferredSize(new Dimension(400,200));
 		scorelist.setForeground(Color.ORANGE);
 		scorelist.setBackground(Color.BLACK);
 		scorelist.setOpaque(true);
+		//scorelist.setRowSorter(sorter);
 		scrollpane.setOpaque(false);
 		
       return scrollpane;
@@ -158,7 +165,7 @@ public class MainPanel extends JPanel {
 	}
 	public JTextPane createDayRoundGUI(){
 		
-
+		System.out.println("dayroundgui");
 		dayRound.setOpaque(false);
 		dayRound.setPreferredSize(dateDimension);
 		StyleContext dayRoundContext = new StyleContext();
@@ -404,9 +411,17 @@ public class MainPanel extends JPanel {
 	class TimeListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("ein tag vergangen");
-			home.data.date++;
-			dateAndTournaments.remove(dayRound);
+			home.data.date+=1;
+			//dateAndTournaments.remove(dayRound);
+
+			//home.remove(home.currentPanel);
+			home.repaint();
+			createRoundsToEventGUI();
+			remove(dayRound);
 			createDayRoundGUI();
+
+			//repaint();
+			
 			MainPanel.this.resolveMatches();
 			//messages.setText(home.data.getNextGames());
 		}
