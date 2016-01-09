@@ -29,8 +29,9 @@ public class Main{
 				Hero h=new Hero(k,temp,stat);
 				database.heroes.add(h);
 				temp="";
+				k++;
 			}
-			k++;
+			
 		}
 		List pnameData = Files.readAllLines(Paths.get("pnames", new String[0]));
 		ListIterator pnameDataItr = pnameData.listIterator();

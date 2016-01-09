@@ -9,14 +9,14 @@ public class Match {
 	int startDate;
 	int[][] scores;
 	int winner;
-	List radHeroes;
-	List dirHeroes;
+	List<Hero> radHeroes;
+	List<Hero> dirHeroes;
 	public Match(Team team, Team team2, int dat) {
 		radiant=team;
 		dire=team2;
 		startDate=dat;
-		radHeroes = new ArrayList();
-		dirHeroes = new ArrayList();
+		radHeroes = new ArrayList<Hero>();
+		dirHeroes = new ArrayList<Hero>();
 	}
 	public void setWinner(int i) {
 		winner =i;

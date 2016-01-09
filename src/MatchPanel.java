@@ -188,8 +188,23 @@ public class MatchPanel extends JPanel{
 		playPanel.add(result,BorderLayout.NORTH);
 		playPanel.add(next, BorderLayout.SOUTH);
 		playPanel.setVisible(true);
-		double direSkill = match.dire.getAverageSkill();
-		double radiantSkill = match.radiant.getAverageSkill();
+		
+		double radMult=1;
+		double dirMult=1;
+		setupPlayerHeroes(playerSide);
+		setupCompHeroes((playerSide+1)%2);
+	
+		for(int i = 0;i<5;i++){
+			
+			radMult=radMult*match.radiant.players.get(i).heroSkill[match.radHeroes.get(i).type]/100;
+			System.out.println(match.radiant.players.get(i).name + " is playing " + match.radHeroes.get(i).name);
+			dirMult=dirMult*match.dire.players.get(i).heroSkill[match.dirHeroes.get(i).type]/100;
+			System.out.println(match.dire.players.get(i).name + " is playing " + match.dirHeroes.get(i).name);
+		}
+		System.out.println("radMult: " +radMult);
+		System.out.println("dirMult: " +dirMult);
+		double direSkill = match.dire.getAverageSkill()*dirMult;
+		double radiantSkill = match.radiant.getAverageSkill()*radMult;
 		double sum = (direSkill+radiantSkill);
 		direSkill=direSkill/sum;
 		if(rand.nextDouble()<direSkill){
@@ -206,6 +221,18 @@ public class MatchPanel extends JPanel{
 		repaint();
 		
 		
+	}
+	private void setupCompHeroes(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void setupPlayerHeroes(int i) {
+		for(int j=0;j<5;j++){
+			if(i==0)
+				match.radHeroes.set(j, players[j].hero);
+			else
+				match.dirHeroes.set(j, players[j].hero);
+		}
 	}
 
 }
