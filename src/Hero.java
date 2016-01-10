@@ -1,5 +1,8 @@
 import java.util.Random;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /**
  * simple class containg information on heroes
  * @author Dr Moebius
@@ -12,9 +15,10 @@ public class Hero {
 	int intstat;
 	int agistat;
 	int strstat;
-	public Hero(int type, String temp, String[] stat) {
+	public ImageIcon icon;
+	public Hero(int type, String temp, String[] stat, String imagePath) {
 		this.type=type;
-		
+		icon=new ImageIcon(imagePath);
 		name=temp;
 		intstat=Integer.parseInt(stat[0]);
 		agistat=Integer.parseInt(stat[1]);

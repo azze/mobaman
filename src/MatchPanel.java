@@ -28,7 +28,7 @@ public class MatchPanel extends JPanel{
 	JPanel pickPanel;
 	JPanel playPanel;
 	JPHLabel[] players;
-	JButton[] heroButtons;
+	HeroPickButton[] heroButtons;
 	JList direPicks;
 	JList radiantPicks;
 	int turn = 0;
@@ -74,11 +74,11 @@ public class MatchPanel extends JPanel{
 		availableHeroes=new ArrayList();
 		ListIterator heroIter = home.data.heroes.listIterator();
 		int i = 0;
-		heroButtons= new JButton[home.data.heroes.size()];
+		heroButtons= new HeroPickButton[home.data.heroes.size()];
 		while(heroIter.hasNext()){
 			Hero hero = (Hero) heroIter.next();
 			availableHeroes.add(hero);
-			JButton button = new JButton(hero.name);
+			HeroPickButton button = new HeroPickButton(hero);
 			final int j=i;
 			button.addActionListener(new ActionListener(){
 
@@ -127,7 +127,7 @@ public class MatchPanel extends JPanel{
 	}
 	private void computerPick() {
 		int i = rand.nextInt(home.data.heroes.size()-turn);
-		Hero hero =(Hero)home.data.heroes.get(i);
+		Hero hero =(Hero)availableHeroes.get(i);
 		if((playerSide+1)%2==0){
 			radiantList.addElement(hero);
 			match.radHeroes.add(hero);

@@ -26,7 +26,7 @@ public class Main{
 				temp=curr;
 			else{
 				String[] stat =curr.split(",");
-				Hero h=new Hero(k,temp,stat);
+				Hero h=new Hero(k,temp,stat,"heroIcon.png");
 				database.heroes.add(h);
 				temp="";
 				k++;
