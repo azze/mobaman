@@ -26,11 +26,12 @@ public class Main{
 				temp=curr;
 			else{
 				String[] stat =curr.split(",");
-				Hero h=new Hero(k,temp,stat);
+				Hero h=new Hero(k,temp,stat,"heroIcons/"+temp+".png");
 				database.heroes.add(h);
 				temp="";
+				k++;
 			}
-			k++;
+			
 		}
 		List pnameData = Files.readAllLines(Paths.get("pnames", new String[0]));
 		ListIterator pnameDataItr = pnameData.listIterator();

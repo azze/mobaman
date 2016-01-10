@@ -28,7 +28,7 @@ public class MatchPanel extends JPanel{
 	JPanel pickPanel;
 	JPanel playPanel;
 	JPHLabel[] players;
-	JButton[] heroButtons;
+	HeroPickButton[] heroButtons;
 	JList direPicks;
 	JList radiantPicks;
 	int turn = 0;
@@ -74,11 +74,11 @@ public class MatchPanel extends JPanel{
 		availableHeroes=new ArrayList();
 		ListIterator heroIter = home.data.heroes.listIterator();
 		int i = 0;
-		heroButtons= new JButton[home.data.heroes.size()];
+		heroButtons= new HeroPickButton[home.data.heroes.size()];
 		while(heroIter.hasNext()){
 			Hero hero = (Hero) heroIter.next();
 			availableHeroes.add(hero);
-			JButton button = new JButton(hero.name);
+			HeroPickButton button = new HeroPickButton(hero);
 			final int j=i;
 			button.addActionListener(new ActionListener(){
 
@@ -127,7 +127,7 @@ public class MatchPanel extends JPanel{
 	}
 	private void computerPick() {
 		int i = rand.nextInt(home.data.heroes.size()-turn);
-		Hero hero =(Hero)home.data.heroes.get(i);
+		Hero hero =(Hero)availableHeroes.get(i);
 		if((playerSide+1)%2==0){
 			radiantList.addElement(hero);
 			match.radHeroes.add(hero);
@@ -188,8 +188,23 @@ public class MatchPanel extends JPanel{
 		playPanel.add(result,BorderLayout.NORTH);
 		playPanel.add(next, BorderLayout.SOUTH);
 		playPanel.setVisible(true);
-		double direSkill = match.dire.getAverageSkill();
-		double radiantSkill = match.radiant.getAverageSkill();
+		
+		double radMult=1;
+		double dirMult=1;
+		setupPlayerHeroes(playerSide);
+		setupCompHeroes((playerSide+1)%2);
+	
+		for(int i = 0;i<5;i++){
+			
+			radMult=radMult*match.radiant.players.get(i).heroSkill[match.radHeroes.get(i).type]/100;
+			System.out.println(match.radiant.players.get(i).name + " is playing " + match.radHeroes.get(i).name);
+			dirMult=dirMult*match.dire.players.get(i).heroSkill[match.dirHeroes.get(i).type]/100;
+			System.out.println(match.dire.players.get(i).name + " is playing " + match.dirHeroes.get(i).name);
+		}
+		System.out.println("radMult: " +radMult);
+		System.out.println("dirMult: " +dirMult);
+		double direSkill = match.dire.getAverageSkill()*dirMult;
+		double radiantSkill = match.radiant.getAverageSkill()*radMult;
 		double sum = (direSkill+radiantSkill);
 		direSkill=direSkill/sum;
 		if(rand.nextDouble()<direSkill){
@@ -206,6 +221,18 @@ public class MatchPanel extends JPanel{
 		repaint();
 		
 		
+	}
+	private void setupCompHeroes(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void setupPlayerHeroes(int i) {
+		for(int j=0;j<5;j++){
+			if(i==0)
+				match.radHeroes.set(j, players[j].hero);
+			else
+				match.dirHeroes.set(j, players[j].hero);
+		}
 	}
 
 }

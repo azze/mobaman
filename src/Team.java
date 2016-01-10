@@ -8,14 +8,14 @@ import java.util.ListIterator;
 public class Team {
 	
 	String name;
-	List players;
+	List<Player> players;
 	int money;
-	List tourneys;
+	List<Tournament> tourneys;
 	public Team(String curr) {
 		name=curr;
-		players= new ArrayList();
+		players= new ArrayList<Player>();
 		money=0;
-		tourneys= new ArrayList();
+		tourneys= new ArrayList<Tournament>();
 	}
 	public void addPlayer(Player playa) {
 		players.add(playa);
