@@ -39,6 +39,7 @@ public class RosterPanel extends JPanel {
 	JPanel buttonContainer = new JPanel();
 	List names = new ArrayList();
 	PlayerThumbnail thumb;
+	JLabel playerImage = new JLabel();
 	
 	Player infoPlayer = new Player("");
 	
@@ -238,7 +239,7 @@ public class RosterPanel extends JPanel {
 
 
 		
-		JLabel playerImage = new JLabel();
+
 		playerImage.setIcon(infoPlayer.image);
 		playerImage.setPreferredSize(new Dimension(250,250));
 		playerImage.setBackground(Color.DARK_GRAY);
