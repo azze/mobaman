@@ -22,15 +22,15 @@ public class MatchPanel extends JPanel{
 	Match match;
 	int playerSide;
 	int startingTeam;
-	List availableHeroes;
+	List<Hero> availableHeroes;
 	DefaultListModel radiantList;
 	DefaultListModel direList;
 	JPanel pickPanel;
-	JPanel playPanel;
+	InGamePanel playPanel;
 	JPHLabel[] players;
 	HeroPickButton[] heroButtons;
-	JList direPicks;
-	JList radiantPicks;
+	JList<Hero> direPicks;
+	JList<Hero> radiantPicks;
 	int turn = 0;
 	Random rand= new Random();
 	public MatchPanel(ManagerFrame _home, Match _match){
@@ -43,7 +43,6 @@ public class MatchPanel extends JPanel{
 			playerSide=0;
 		startingTeam=rand.nextInt(2);
 		pickPanel = new JPanel();
-		playPanel = new JPanel();
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		setupPickPanel();
 		add(pickPanel);
@@ -78,7 +77,14 @@ public class MatchPanel extends JPanel{
 		while(heroIter.hasNext()){
 			Hero hero = (Hero) heroIter.next();
 			availableHeroes.add(hero);
-			HeroPickButton button = new HeroPickButton(hero);
+			double[] skills = new double[5];
+			for(int k=0;k<5;k++){
+				if(playerSide==0)
+					skills[k]=match.radiant.players.get(k).heroSkill[i];
+				else
+					skills[k]=match.dire.players.get(k).heroSkill[i];
+			}
+			HeroPickButton button = new HeroPickButton(hero,skills);
 			final int j=i;
 			button.addActionListener(new ActionListener(){
 
@@ -116,9 +122,18 @@ public class MatchPanel extends JPanel{
 			
 			public void actionPerformed(ActionEvent e) {
 				MatchPanel.this.remove(pickPanel);
+				List<InGameHero> dirIngHer = new ArrayList<InGameHero>();
+				List<InGameHero> radIngHer = new ArrayList<InGameHero>();
+				for(int i=0;i<5;i++){
+					dirIngHer.add(new InGameHero(match.dirHeroes.get(i), match.dire.players.get(i)));
+					radIngHer.add(new InGameHero(match.radHeroes.get(i), match.radiant.players.get(i)));
+				}
+				MatchPanel.this.playPanel= new InGamePanel(dirIngHer,radIngHer,playerSide,home);
 				MatchPanel.this.add(playPanel);
-				MatchPanel.this.setupPlayPanel();
-				
+				//MatchPanel.this.add(playPanel);
+				//MatchPanel.this.setupPlayPanel();
+				validate();
+				repaint();
 			}
 		});
 		playerPanel.add(nextt);
@@ -174,6 +189,7 @@ public class MatchPanel extends JPanel{
 		else
 			computerPick();
 	}
+	/*
 	private void setupPlayPanel() {
 		playPanel.setLayout(new BorderLayout());
 		JTextArea result = new JTextArea();
@@ -222,6 +238,7 @@ public class MatchPanel extends JPanel{
 		
 		
 	}
+	*/
 	private void setupCompHeroes(int i) {
 		// TODO Auto-generated method stub
 		

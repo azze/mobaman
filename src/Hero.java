@@ -12,17 +12,27 @@ public class Hero {
 	public String name;
 	double[] heroSkill;
 	int type;
-	int intstat;
-	int agistat;
-	int strstat;
+	int damage;
+	int damageGain;
+	int sustain;
+	int sustainGain;
+	int burst;
+	int burstGain;
+	int mobility;
+	int mobilityGain;
 	public ImageIcon icon;
-	public Hero(int type, String temp, String[] stat, String imagePath) {
+	public Hero(int type, String temp, int[] stats, String imagePath) {
 		this.type=type;
 		icon=new ImageIcon(imagePath);
 		name=temp;
-		intstat=Integer.parseInt(stat[0]);
-		agistat=Integer.parseInt(stat[1]);
-		strstat=Integer.parseInt(stat[2]);
+		damage=stats[0];
+		damageGain=stats[1];
+		sustain=stats[2]*10;
+		sustainGain=stats[3];
+		burst=stats[4];
+		burstGain=stats[5];
+		mobility=stats[6];
+		mobilityGain= stats[7];
 		
 	}
 	public String toString(){

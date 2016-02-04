@@ -7,13 +7,21 @@ public class HeroPickButton extends JPanel {
 	Hero hero;	
 	JButton button;
 	JLabel label;
-	public HeroPickButton(Hero hero){
+	JTextArea skills;
+	public HeroPickButton(Hero hero,double[] skills2){
 		this.hero=hero;
 		button= new JButton(hero.icon);
 		label= new JLabel(hero.name);
+		skills=new JTextArea();
+		String str="";
+		for(int i=0;i<5;i++){
+			str=str+skills2[i]+"\n";
+		}
+		skills.setText(str);
 		setLayout(new BorderLayout());
-		add(button,BorderLayout.NORTH);
-		add(label,BorderLayout.SOUTH);
+		add(button,BorderLayout.CENTER);
+		add(label,BorderLayout.NORTH);
+		add(skills, BorderLayout.SOUTH);
 	}
 	public void addActionListener(ActionListener actionListener) {
 		button.addActionListener(actionListener);

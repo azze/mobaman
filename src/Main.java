@@ -26,7 +26,10 @@ public class Main{
 				temp=curr;
 			else{
 				String[] stat =curr.split(",");
-				Hero h=new Hero(k,temp,stat,"heroIcons/"+temp+".png");
+				int[] stats = new int[stat.length];
+				for(int i=0;i<stat.length;i++)
+					stats[i]=Integer.parseInt(stat[i]);
+				Hero h=new Hero(k,temp,stats,"heroIcons/"+temp+".png");
 				database.heroes.add(h);
 				temp="";
 				k++;
